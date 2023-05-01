@@ -7,13 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.videoplayer.databinding.FragmentVideoPlayerBinding
+import com.example.videoplayer.helper.interfaces.OnPageChangeListener
 import com.example.videoplayer.repository.models.NetworkResult
 import com.example.videoplayer.repository.models.Video
+import com.example.videoplayer.ui.adapters.VideoPlayerAdapter
 import com.example.videoplayer.viewmodels.VideoPlayerFragmentVM
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class VideoPlayerFragment : Fragment() {
+class VideoPlayerFragment : Fragment(), OnPageChangeListener {
     private lateinit var binding: FragmentVideoPlayerBinding
     private val viewModel: VideoPlayerFragmentVM by viewModels()
 
@@ -34,6 +36,9 @@ class VideoPlayerFragment : Fragment() {
     private fun configViews() {
         //fetching videos data from API
         viewModel.getVideos()
+
+
+        binding.viewpager.isUserInputEnabled = false
     }
 
     private fun setUpListeners() {
@@ -43,6 +48,7 @@ class VideoPlayerFragment : Fragment() {
                 is NetworkResult.Success -> {
                     binding.tvError.visibility = View.GONE
                     binding.viewpager.visibility = View.VISIBLE
+                    binding.viewpager.adapter = VideoPlayerAdapter(it.data as List<Video>, this)
                     binding.pbLoader.visibility = View.GONE
                 }
                 is NetworkResult.Error -> {
@@ -58,5 +64,13 @@ class VideoPlayerFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onNextPageClicked() {
+        binding.viewpager.currentItem += 1
+    }
+
+    override fun onPrevPageClicked() {
+        binding.viewpager.currentItem -= 1
     }
 }
