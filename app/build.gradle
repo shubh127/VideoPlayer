@@ -1,0 +1,80 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'com.example.videoplayer'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.videoplayer"
+        minSdk 23
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:4000/\"")
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:4000/\"")
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+}
+
+dependencies {
+    def core_version = "1.9.0"
+    def app_compat_version = "1.6.1"
+    def material_design_version = "1.8.0"
+    def constraint_version = "2.1.4"
+    def nav_version = "2.5.3"
+    def hilt_version = "2.44"
+    def retrofit_version = "2.9.0"
+
+    //androidx code library
+    implementation "androidx.core:core-ktx:$core_version"
+
+    //app compat
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+
+    //google material design library
+    implementation "com.google.android.material:material:$material_design_version"
+
+    //android constraint layout
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+
+    //android jetpack navigation component
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    //hilt Dependency injection
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+}
+
+kapt {
+    correctErrorTypes true
+}
