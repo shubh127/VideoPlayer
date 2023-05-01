@@ -33,10 +33,12 @@ class VideoPlayerViewHolder(private var binding: ViewVideoPlayerBinding) :
 
     private fun setUpClickListeners(listener: OnPageChangeListener, position: Int, size: Int) {
         binding.ibPlayPause.setOnClickListener {
+            //play/pause button click
             handlePlayPause()
         }
 
         binding.ibNext.setOnClickListener {
+            //on next click
             if (position < size) {
                 isPlaying = false
                 binding.ibPlayPause.setImageResource(R.drawable.play)
@@ -46,6 +48,7 @@ class VideoPlayerViewHolder(private var binding: ViewVideoPlayerBinding) :
         }
 
         binding.ibPrevious.setOnClickListener {
+            //previous button click
             if (position > 0) {
                 isPlaying = false
                 binding.ibPlayPause.setImageResource(R.drawable.play)
@@ -55,6 +58,7 @@ class VideoPlayerViewHolder(private var binding: ViewVideoPlayerBinding) :
         }
 
         binding.pvVideo.setOnClickListener {
+            //video player click to show hide the play/pause, next, prev buttons
             if (binding.grpButtons.isVisible) {
                 binding.grpButtons.visibility = View.GONE
             } else {

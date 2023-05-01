@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VideoPlayer</string>
+    <string name="no_internet">No internet available!!! Please check the connection or try again later!!!</string>
 </resources>

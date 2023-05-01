@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import com.example.videoplayer.R
 import com.example.videoplayer.databinding.FragmentVideoPlayerBinding
 import com.example.videoplayer.helper.NetworkUtility
 import com.example.videoplayer.helper.interfaces.OnPageChangeListener
@@ -37,13 +37,14 @@ class VideoPlayerFragment : Fragment(), OnPageChangeListener {
     }
 
     private fun configViews() {
-        //fetching videos data from API
+
         if (NetworkUtility.isNetworkAvailable(requireContext())) {
+            //fetching videos data from API
             viewModel.getVideos()
         } else {
             Toast.makeText(
                 context,
-                "No internet available!!! Please check the connection or try again later!!!",
+                getString(R.string.no_internet),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -56,18 +57,21 @@ class VideoPlayerFragment : Fragment(), OnPageChangeListener {
         viewModel.getVideosLiveData().observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success<*> -> {
+                    //api success case
                     binding.tvError.visibility = View.GONE
                     binding.viewpager.visibility = View.VISIBLE
                     binding.viewpager.adapter = VideoPlayerAdapter(it.data as List<Video>, this)
                     binding.pbLoader.visibility = View.GONE
                 }
                 is NetworkResult.Error<*> -> {
+                    //api error case
                     binding.tvError.text = it.message.toString()
                     binding.tvError.visibility = View.VISIBLE
                     binding.viewpager.visibility = View.GONE
                     binding.pbLoader.visibility = View.GONE
                 }
                 is NetworkResult.Loading<*> -> {
+                    //loading till response from server
                     binding.pbLoader.visibility = View.VISIBLE
                     binding.tvError.visibility = View.GONE
                     binding.viewpager.visibility = View.GONE
@@ -76,10 +80,16 @@ class VideoPlayerFragment : Fragment(), OnPageChangeListener {
         }
     }
 
+    /**
+     * handle next button click of video player
+     */
     override fun onNextPageClicked() {
         binding.viewpager.currentItem += 1
     }
 
+    /**
+     * handle previous button click of video player
+     */
     override fun onPrevPageClicked() {
         binding.viewpager.currentItem -= 1
     }

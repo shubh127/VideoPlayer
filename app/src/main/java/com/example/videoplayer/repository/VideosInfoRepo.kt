@@ -7,6 +7,9 @@ import com.example.videoplayer.repository.networkSource.ApiService
 import org.json.JSONObject
 import javax.inject.Inject
 
+/**
+ * Repository class to fetch data from server and supply to view model
+ */
 class VideosInfoRepo @Inject constructor(private val apiService: ApiService) {
     private val videoLiveData = SingleLiveEvent<NetworkResult<List<Video>>>()
 
