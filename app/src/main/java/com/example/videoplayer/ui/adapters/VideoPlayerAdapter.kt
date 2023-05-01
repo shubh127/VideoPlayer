@@ -3,8 +3,8 @@ package com.example.videoplayer.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.videoplayer.databinding.ViewVideoPlayerBinding
 import com.example.videoplayer.repository.models.Video
+import com.example.videoplayer.databinding.ViewVideoPlayerBinding
 import com.example.videoplayer.helper.interfaces.OnPageChangeListener
 import com.example.videoplayer.ui.viewholders.VideoPlayerViewHolder
 
